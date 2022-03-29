@@ -35,7 +35,6 @@ public class RamseteMotionPlanner {
         var goal = trajectory.sample(Timer.getFPGATimestamp() - startTime);
         var chassisSpeeds = controller.calculate(driveAttitude.getPose(), goal);
         var wheelSpeeds = KINEMATICS.toWheelSpeeds(chassisSpeeds);
-        driveAttitude.setWheelSpeeds(new DifferentialDrive.WheelSpeeds(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond));
     }
 
     public void stop() {

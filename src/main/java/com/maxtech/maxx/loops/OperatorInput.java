@@ -3,6 +3,7 @@ package com.maxtech.maxx.loops;
 import com.maxtech.lib.scheduling.Loop;
 import com.maxtech.maxx.Constants;
 import com.maxtech.maxx.subsystems.drive.DriveAttitude;
+import com.maxtech.maxx.subsystems.drive.DriveIO;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -17,7 +18,7 @@ public class OperatorInput extends Loop {
         return instance;
     }
 
-    private final DriveAttitude state = DriveAttitude.getInstance();
+    private final DriveIO driveIO = DriveIO.getInstance();
 
     private final XboxController masterController = new XboxController(Constants.Ports.Drive.MASTER);
 
@@ -30,7 +31,7 @@ public class OperatorInput extends Loop {
         double speed = masterController.getRightTriggerAxis() - masterController.getLeftTriggerAxis();
         double rotation = Math.min(Math.max(Math.pow(-masterController.getLeftX(), 3) * 2, -1), 1);
         var speeds = DifferentialDrive.arcadeDriveIK(speed, rotation, true);
-        state.setWheelSpeeds(speeds);
+        driveIO.setWheelSpeeds(speeds);
     }
 
     @Override

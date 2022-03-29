@@ -4,17 +4,9 @@ import com.maxtech.lib.scheduling.Looper;
 import com.maxtech.lib.scheduling.SingleLoopSelector;
 import com.maxtech.maxx.loops.OperatorInput;
 import com.maxtech.maxx.loops.TrajectoryRunner;
-import com.maxtech.maxx.planners.RamseteMotionPlanner;
+import com.maxtech.maxx.subsystems.climber.Climber;
 import com.maxtech.maxx.subsystems.drive.Drive;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
-
-import java.io.IOException;
-import java.nio.file.Path;
-
-import static com.maxtech.lib.drivers.Pathweaver.loadPathweaverTrajectory;
 
 /**
  * This class is scheduled by the Java VM.
@@ -22,6 +14,7 @@ import static com.maxtech.lib.drivers.Pathweaver.loadPathweaverTrajectory;
 public class Robot extends TimedRobot {
     // Subsystems
     private final Drive drive = Drive.getInstance();
+    private final Climber climber = Climber.getInstance();
 
     // Loops
     private final OperatorInput oi = OperatorInput.getInstance();
@@ -35,6 +28,7 @@ public class Robot extends TimedRobot {
 
     public Robot() {
         drive.register(enabledLooper);
+        climber.register(enabledLooper);
         oi.register(enabledLooper);
 
         autonomousLooper.registerDefault(new TrajectoryRunner("A to B.wpilib.json"));

@@ -4,8 +4,9 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.maxtech.lib.drivers.LazyTalonFX;
 import com.maxtech.lib.scheduling.IO;
 import edu.wpi.first.math.Pair;
-import edu.wpi.first.math.geometry.Twist2d;
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveIO extends IO {
     private static DriveIO instance;
@@ -23,9 +24,8 @@ public class DriveIO extends IO {
     private final LazyTalonFX RIGHT_BACK = new LazyTalonFX(3);
     private final LazyTalonFX RIGHT_FRONT = new LazyTalonFX(4);
 
-    public void setHeading(Twist2d heading) {
-
-    }
+    private final ProfiledPIDController LEFT_CONTROLLER = new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(10, 5));
+    private final ProfiledPIDController RIGHT_CONTROLLER = new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(10, 5));
 
     public void stop() {
     }
@@ -35,7 +35,12 @@ public class DriveIO extends IO {
         LEFT_FRONT.set(TalonFXControlMode.PercentOutput, voltages.getFirst() / 12);
         RIGHT_BACK.set(TalonFXControlMode.PercentOutput, voltages.getSecond() / 12);
         RIGHT_FRONT.set(TalonFXControlMode.PercentOutput, voltages.getSecond() / 12);
+    }
 
-        DriverStation.reportWarning("Set voltages to " + voltages.getFirst() + " " + voltages.getSecond(), false);
+    public void setWheelSpeeds(DifferentialDrive.WheelSpeeds speeds) {
+        LEFT_BACK.set(TalonFXControlMode.PercentOutput, speeds.left);
+        LEFT_FRONT.set(TalonFXControlMode.PercentOutput, speeds.left);
+        RIGHT_BACK.set(TalonFXControlMode.PercentOutput, speeds.right);
+        RIGHT_FRONT.set(TalonFXControlMode.PercentOutput, speeds.right);
     }
 }

@@ -5,7 +5,6 @@ import com.maxtech.lib.scheduling.Looper;
 import com.maxtech.lib.scheduling.Subsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Twist2d;
 
 public class Drive extends Subsystem<DriveState, DriveAttitude, DriveIO> {
     private static Drive instance;
@@ -32,11 +31,6 @@ public class Drive extends Subsystem<DriveState, DriveAttitude, DriveIO> {
             @Override
             public void onLoop() {
                 attitude.updateObservations();
-                io.setVoltages(attitude.getVoltages());
-
-                switch (state) {
-                    case OPEN_LOOP: io.setHeading(attitude.getHeading());
-                }
             }
 
             @Override
