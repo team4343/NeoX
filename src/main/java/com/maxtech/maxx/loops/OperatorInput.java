@@ -2,7 +2,7 @@ package com.maxtech.maxx.loops;
 
 import com.maxtech.lib.scheduling.Loop;
 import com.maxtech.maxx.Constants;
-import com.maxtech.maxx.subsystems.drive.SystemState;
+import com.maxtech.maxx.subsystems.drive.DriveAttitude;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -17,13 +17,12 @@ public class OperatorInput extends Loop {
         return instance;
     }
 
-    private final SystemState state = SystemState.getInstance();
+    private final DriveAttitude state = DriveAttitude.getInstance();
 
     private final XboxController masterController = new XboxController(Constants.Ports.Drive.MASTER);
 
     @Override
     public void onStart() {
-
     }
 
     @Override

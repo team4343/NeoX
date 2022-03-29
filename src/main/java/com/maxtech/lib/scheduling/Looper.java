@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Looper {
     private final ArrayList<Loop> loops = new ArrayList<>();
-    private final Notifier notifier = new Notifier(() -> loops.forEach(Loop::onLoop));
+    protected final Notifier notifier = new Notifier(() -> loops.forEach(Loop::onLoop));
 
     public void register(Loop loop) {
         loops.add(loop);

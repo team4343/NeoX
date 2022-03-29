@@ -1,5 +1,5 @@
 package com.maxtech.maxx.subsystems.drive;
 
-public enum ControlState {
+public enum DriveState {
     OPEN_LOOP,
 }
