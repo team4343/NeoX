@@ -6,6 +6,10 @@ public class SingleLoopSelector extends Looper {
     private final SendableChooser<Loop> chooser = new SendableChooser<>();
     private Loop lastSelection;
 
+    public SingleLoopSelector(String name) {
+        super(name);
+    }
+
     @Override
     public void register(Loop loop) {
         chooser.addOption(loop.getClass().getName(), loop);
@@ -27,6 +31,6 @@ public class SingleLoopSelector extends Looper {
     @Override
     public void stop() {
         notifier.stop();
-        lastSelection.onEnd();
+        if (lastSelection != null) lastSelection.onEnd();
     }
 }

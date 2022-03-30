@@ -20,9 +20,9 @@ public class Robot extends TimedRobot {
     private final OperatorInput oi = OperatorInput.getInstance();
 
     // Loopers
-    private final Looper enabledLooper = new Looper();
-    private final Looper disabledLooper = new Looper();
-    private final SingleLoopSelector autonomousLooper = new SingleLoopSelector();
+    private final Looper enabledLooper = new Looper("Enabled");
+    private final Looper disabledLooper = new Looper("Disabled");
+    private final SingleLoopSelector autonomousLooper = new SingleLoopSelector("Autonomous");
 
     private final RobotAttitude attitude = RobotAttitude.getInstance();
 
@@ -36,6 +36,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        disabledLooper.stop();
+        autonomousLooper.stop();
         enabledLooper.start();
     }
 

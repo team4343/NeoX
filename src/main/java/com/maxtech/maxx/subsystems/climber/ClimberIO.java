@@ -20,8 +20,14 @@ public class ClimberIO extends IO {
     private final ProfiledPIDController LEFT_CONTROLLER = new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(10, 5));
     private final ProfiledPIDController RIGHT_CONTROLLER = new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(10, 5));
 
+    private ClimberIO() {}
+
     public void setPosition(double position) {
         LEFT.set(TalonFXControlMode.Position, LEFT_CONTROLLER.calculate(LEFT.getSelectedSensorPosition(), position));
         RIGHT.set(TalonFXControlMode.Position, RIGHT_CONTROLLER.calculate(RIGHT.getSelectedSensorPosition(), position));
+    }
+
+    public double getPosition() {
+        return LEFT.getSelectedSensorPosition();
     }
 }

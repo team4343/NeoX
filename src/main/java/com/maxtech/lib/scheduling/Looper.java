@@ -8,6 +8,10 @@ public class Looper {
     private final ArrayList<Loop> loops = new ArrayList<>();
     protected final Notifier notifier = new Notifier(() -> loops.forEach(Loop::onLoop));
 
+    public Looper(String name) {
+        notifier.setName(name);
+    }
+
     public void register(Loop loop) {
         loops.add(loop);
     }
