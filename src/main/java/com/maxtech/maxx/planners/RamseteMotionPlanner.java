@@ -4,7 +4,6 @@ import com.maxtech.maxx.subsystems.drive.DriveAttitude;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import static com.maxtech.maxx.Constants.Drive.KINEMATICS;
 

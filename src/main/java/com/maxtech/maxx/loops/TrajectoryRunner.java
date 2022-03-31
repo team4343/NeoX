@@ -23,6 +23,5 @@ public class TrajectoryRunner extends Loop {
     }
 
     @Override
-    public void onEnd() {
-    }
+    public void onEnd() {}
 }

@@ -1,13 +1,12 @@
 package com.maxtech.maxx.loops;
 
 import com.maxtech.lib.scheduling.Loop;
-import com.maxtech.maxx.Constants;
 import com.maxtech.maxx.subsystems.climber.Climber;
-import com.maxtech.maxx.subsystems.climber.ClimberState;
-import com.maxtech.maxx.subsystems.drive.DriveAttitude;
 import com.maxtech.maxx.subsystems.drive.DriveIO;
-import edu.wpi.first.wpilibj.XboxController;
+import com.maxtech.maxx.subsystems.intake.Intake;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+import static com.maxtech.maxx.Constants.Ports.Drive.MASTER_CONTROLLER;
 
 public class OperatorInput extends Loop {
     private static OperatorInput instance;
@@ -22,8 +21,7 @@ public class OperatorInput extends Loop {
 
     private final DriveIO driveIO = DriveIO.getInstance();
     private final Climber climber = Climber.getInstance();
-
-    private final XboxController masterController = new XboxController(Constants.Ports.Drive.MASTER);
+    private final Intake intake   = Intake.getInstance();
 
     @Override
     public void onStart() {
@@ -31,15 +29,21 @@ public class OperatorInput extends Loop {
 
     @Override
     public void onLoop() {
-        double speed = masterController.getRightTriggerAxis() - masterController.getLeftTriggerAxis();
-        double rotation = Math.min(Math.max(Math.pow(-masterController.getLeftX(), 3) * 2, -1), 1);
+        double speed = MASTER_CONTROLLER.getRightTriggerAxis() - MASTER_CONTROLLER.getLeftTriggerAxis();
+        double rotation = Math.min(Math.max(Math.pow(-MASTER_CONTROLLER.getLeftX(), 3) * 2, -1), 1);
         var speeds = DifferentialDrive.arcadeDriveIK(speed, rotation, true);
         driveIO.setWheelSpeeds(speeds);
 
-        if (masterController.getYButtonPressed()) {
+        if (MASTER_CONTROLLER.getYButtonPressed()) {
             climber.extend();
-        } else if (masterController.getYButtonReleased()) {
+        } else if (MASTER_CONTROLLER.getYButtonReleased()) {
             climber.retract();
+        }
+
+        if (MASTER_CONTROLLER.getXButtonPressed()) {
+            intake.lower();
+        } else if (MASTER_CONTROLLER.getXButtonReleased()) {
+            intake.raise();
         }
     }
 

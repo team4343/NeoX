@@ -1,8 +1,6 @@
 package com.maxtech.maxx.subsystems.climber;
 
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class ClimberAttitude {
     private static ClimberAttitude instance;
@@ -12,13 +10,18 @@ public class ClimberAttitude {
         return instance;
     }
 
-    private final ClimberIO io = ClimberIO.getInstance();
+    private ClimberAttitude() {
+        var tab = Shuffleboard.getTab("Climber");
+        tab.addNumber("Desired", this::getDesired);
+    }
 
-    private final Mechanism2d mechanism = new Mechanism2d(20, 110);
-    private final MechanismRoot2d mechanismRoot = mechanism.getRoot("Elevator root", 10, 0);
-    private final MechanismLigament2d mechanismLigament = mechanismRoot.append(new MechanismLigament2d("Elevator", io.getPosition(), 90));
+    private double desired = 0;
 
-    public Mechanism2d getMechanism() {
-        return mechanism;
+    public void setDesired(double desired) {
+        this.desired = desired;
+    }
+
+    public double getDesired() {
+        return desired;
     }
 }
