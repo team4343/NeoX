@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
         goalTracker.register(enabledLooper);
         indexerChecker.register(enabledLooper);
 
-        autonomousLooper.registerDefault(new TrajectoryRunner("A to B.wpilib.json"));
+        autonomousLooper.registerDefault(new TrajectoryRunner("Right side 1"));
     }
 
     @Override

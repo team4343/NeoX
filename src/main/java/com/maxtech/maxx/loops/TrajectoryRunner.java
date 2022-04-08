@@ -1,8 +1,8 @@
 package com.maxtech.maxx.loops;
 
-import com.maxtech.lib.drivers.Pathweaver;
 import com.maxtech.lib.scheduling.Loop;
 import com.maxtech.maxx.planners.RamseteMotionPlanner;
+import com.pathplanner.lib.PathPlanner;
 
 public class TrajectoryRunner extends Loop {
     private final RamseteMotionPlanner motionPlanner = RamseteMotionPlanner.getInstance();
@@ -14,7 +14,7 @@ public class TrajectoryRunner extends Loop {
 
     @Override
     public void onStart() {
-        motionPlanner.setTrajectory(Pathweaver.loadPathweaverTrajectory(trajectoryName));
+        motionPlanner.setTrajectory(PathPlanner.loadPath(trajectoryName, 5, 3));
     }
 
     @Override
