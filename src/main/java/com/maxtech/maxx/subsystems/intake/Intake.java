@@ -12,7 +12,8 @@ public class Intake extends Subsystem<IntakeState, IntakeAttitude, IntakeIO> {
         return instance;
     }
 
-    private IntakeState state = IntakeState.RAISED;
+    public IntakeState state = IntakeState.RAISED;
+    public IntakeState previousState = IntakeState.RAISED;
     private final IntakeAttitude attitude = IntakeAttitude.getInstance();
     private final IntakeIO io = IntakeIO.getInstance();
 
@@ -20,7 +21,7 @@ public class Intake extends Subsystem<IntakeState, IntakeAttitude, IntakeIO> {
         var tab = Shuffleboard.getTab("Intake");
         tab.addString("State", () -> state.toString());
         tab.addNumber("Desired position", () -> state.position);
-        tab.addNumber("Desired velocity", () -> state.velocity);
+        tab.addNumber("Desired velocity", () -> state.percentOut);
         tab.addNumber("Position", io::getPosition);
         tab.addNumber("Velocity", io::getVelocity);
     }
@@ -31,18 +32,20 @@ public class Intake extends Subsystem<IntakeState, IntakeAttitude, IntakeIO> {
     }
 
     public void raise() {
+        previousState = state;
         state = IntakeState.RAISED;
         attitude.setDesiredPosition(state.position);
-        attitude.setDesiredVelocity(state.velocity);
+        attitude.setDesiredPercentOut(state.percentOut);
     }
 
     public void lower() {
+        previousState = state;
         state = IntakeState.LOWERED;
         attitude.setDesiredPosition(state.position);
-        attitude.setDesiredVelocity(state.velocity);
+        attitude.setDesiredPercentOut(state.percentOut);
     }
 
     public boolean atGoal() {
-        return io.getPosition() == state.position && io.getVelocity() == state.velocity;
+        return io.getPosition() == state.position && io.getVelocity() == state.percentOut;
     }
 }

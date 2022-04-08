@@ -4,19 +4,20 @@ import com.maxtech.lib.scheduling.Loop;
 import com.maxtech.maxx.subsystems.climber.Climber;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
 
 import static com.maxtech.maxx.Constants.Ports.Drive.MASTER_CONTROLLER;
 
 public class SubsystemGoalTracker extends Loop {
     private static SubsystemGoalTracker instance;
 
-    private final Climber climber = Climber.getInstance();
-    private boolean climberPreviouslyAtGoal = false;
-
     public static SubsystemGoalTracker getInstance() {
         if (instance == null) instance = new SubsystemGoalTracker();
         return instance;
     }
+
+    private final Climber climber = Climber.getInstance();
+    private boolean climberPreviouslyAtGoal = false;
 
     @Override
     public void onStart() {}
@@ -24,7 +25,7 @@ public class SubsystemGoalTracker extends Loop {
     @Override
     public void onLoop() {
         if (climber.atState() && !climberPreviouslyAtGoal) {
-            MASTER_CONTROLLER.setRumble(GenericHID.RumbleType.kLeftRumble, 1.0);
+            MASTER_CONTROLLER.setRumble(XboxController.RumbleType.kRightRumble, 1);
             DriverStation.reportWarning("" + climberPreviouslyAtGoal + " " + climber.atState(), false);
         } else if (!climber.atState()) {
             climberPreviouslyAtGoal = false;

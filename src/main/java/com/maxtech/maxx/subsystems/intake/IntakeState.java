@@ -1,13 +1,13 @@
 package com.maxtech.maxx.subsystems.intake;
 
 public enum IntakeState {
-    RAISED(0, 0), LOWERED(1200, 1000);
+    RAISED(0, 0), LOWERED(-1200, -.5);
 
     public final int position;
-    public final int velocity;
+    public final double percentOut;
 
-    IntakeState(int position, int velocity) {
+    IntakeState(int position, double percentOut) {
         this.position = position;
-        this.velocity = velocity;
+        this.percentOut = percentOut;
     }
 }

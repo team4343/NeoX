@@ -2,11 +2,13 @@ package com.maxtech.maxx;
 
 import com.maxtech.lib.scheduling.Looper;
 import com.maxtech.lib.scheduling.SingleLoopSelector;
+import com.maxtech.maxx.loops.IndexerChecker;
 import com.maxtech.maxx.loops.OperatorInput;
 import com.maxtech.maxx.loops.SubsystemGoalTracker;
 import com.maxtech.maxx.loops.TrajectoryRunner;
 import com.maxtech.maxx.subsystems.climber.Climber;
 import com.maxtech.maxx.subsystems.drive.Drive;
+import com.maxtech.maxx.subsystems.indexer.Indexer;
 import com.maxtech.maxx.subsystems.intake.Intake;
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -18,10 +20,12 @@ public class Robot extends TimedRobot {
     private final Drive drive = Drive.getInstance();
     private final Climber climber = Climber.getInstance();
     private final Intake intake = Intake.getInstance();
+    private final Indexer indexer = Indexer.getInstance();
 
     // Loops
     private final OperatorInput oi = OperatorInput.getInstance();
     private final SubsystemGoalTracker goalTracker = SubsystemGoalTracker.getInstance();
+    private final IndexerChecker indexerChecker = IndexerChecker.getInstance();
 
     // Loopers
     private final Looper enabledLooper = new Looper("Enabled");
@@ -34,9 +38,11 @@ public class Robot extends TimedRobot {
         drive.register(enabledLooper);
         climber.register(enabledLooper);
         intake.register(enabledLooper);
+        indexer.register(enabledLooper);
 
         oi.register(enabledLooper);
         goalTracker.register(enabledLooper);
+        indexerChecker.register(enabledLooper);
 
         autonomousLooper.registerDefault(new TrajectoryRunner("A to B.wpilib.json"));
     }

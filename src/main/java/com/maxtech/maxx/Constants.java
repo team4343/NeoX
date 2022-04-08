@@ -1,7 +1,6 @@
 package com.maxtech.maxx;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class Constants {

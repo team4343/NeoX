@@ -47,6 +47,6 @@ public class Climber extends Subsystem<ClimberState, ClimberAttitude, ClimberIO>
     }
 
     public boolean atState() {
-        return io.getPosition() != state.position;
+        return io.getPosition() == state.position;
     }
 }

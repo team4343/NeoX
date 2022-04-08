@@ -1,14 +1,13 @@
 package com.maxtech.maxx.subsystems.climber;
 
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.maxtech.lib.drivers.LazyTalonSRX;
 import com.maxtech.lib.scheduling.IO;
 import com.maxtech.lib.scheduling.Loop;
 import com.maxtech.lib.scheduling.Looper;
-import edu.wpi.first.math.controller.ElevatorFeedforward;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
+import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 
 public class ClimberIO extends IO {
     private static ClimberIO instance;
@@ -20,18 +19,44 @@ public class ClimberIO extends IO {
 
     private final ClimberAttitude attitude = ClimberAttitude.getInstance();
 
-    private final LazyTalonSRX LEFT = new LazyTalonSRX(11);
-    private final LazyTalonSRX RIGHT = new LazyTalonSRX(12);
+    private final CANSparkMax LEFT = new CANSparkMax(19, kBrushless);
+    private final CANSparkMax RIGHT = new CANSparkMax(17, kBrushless);
 
-    private final ProfiledPIDController LEFT_CONTROLLER = new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(10, 5));
-    private final ProfiledPIDController RIGHT_CONTROLLER = new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(10, 5));
-
-    private final ElevatorFeedforward LEFT_FEEDFORWARD = new ElevatorFeedforward(1, 1, 1, 1);
-    private final ElevatorFeedforward RIGHT_FEEDFORWARD = new ElevatorFeedforward(1, 1, 1, 1);
+    private final SparkMaxPIDController LEFT_CONTROLLER = LEFT.getPIDController();
+    private final SparkMaxPIDController RIGHT_CONTROLLER = RIGHT.getPIDController();
 
     private ClimberIO() {
+        LEFT.restoreFactoryDefaults();
+        RIGHT.restoreFactoryDefaults();
+
+        LEFT.setInverted(true);
+
+        LEFT.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 70);
+        LEFT.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+
+        RIGHT.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 70);
+        RIGHT.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+
+        LEFT.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, -5);
+        LEFT.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+        RIGHT.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, -5);
+        RIGHT.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+        LEFT_CONTROLLER.setP(0.6);
+        LEFT_CONTROLLER.setI(0);
+        LEFT_CONTROLLER.setIZone(0);
+        LEFT_CONTROLLER.setD(0);
+        LEFT_CONTROLLER.setFF(0);
+
+        RIGHT_CONTROLLER.setP(0.6);
+        RIGHT_CONTROLLER.setI(0);
+        RIGHT_CONTROLLER.setIZone(0);
+        RIGHT_CONTROLLER.setD(0);
+        RIGHT_CONTROLLER.setFF(0);
+
         var tab = Shuffleboard.getTab("Climber");
-        tab.addNumber("Position", LEFT::getSelectedSensorPosition);
+        tab.addNumber("Position", () -> LEFT.getEncoder().getPosition());
     }
 
     public void register(Looper looper) {
@@ -43,8 +68,8 @@ public class ClimberIO extends IO {
 
             @Override
             public void onLoop() {
-                LEFT.set(TalonSRXControlMode.Position, LEFT_CONTROLLER.calculate(LEFT.getSelectedSensorPosition(), attitude.getDesired()) + LEFT_FEEDFORWARD.calculate(LEFT.getSelectedSensorVelocity()));
-                RIGHT.set(TalonSRXControlMode.Position, RIGHT_CONTROLLER.calculate(RIGHT.getSelectedSensorPosition(), attitude.getDesired()) + RIGHT_FEEDFORWARD.calculate(RIGHT.getSelectedSensorVelocity()));
+                LEFT_CONTROLLER.setReference(attitude.getDesired(), CANSparkMax.ControlType.kPosition);
+                RIGHT_CONTROLLER.setReference(attitude.getDesired(), CANSparkMax.ControlType.kPosition);
             }
 
             @Override
@@ -55,6 +80,6 @@ public class ClimberIO extends IO {
     }
 
     public double getPosition() {
-        return LEFT.getSelectedSensorPosition();
+        return RIGHT.getEncoder().getPosition();
     }
 }

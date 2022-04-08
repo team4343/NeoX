@@ -1,7 +1,5 @@
 package com.maxtech.maxx.subsystems.intake;
 
-import com.maxtech.lib.drivers.LazyTalonSRX;
-
 public class IntakeAttitude {
     private static IntakeAttitude instance;
 
@@ -11,7 +9,7 @@ public class IntakeAttitude {
     }
 
     private int desiredPosition = 0;
-    private int desiredVelocity = 0;
+    private double desiredPercentOut = 0;
 
     private IntakeAttitude() {};
 
@@ -19,15 +17,15 @@ public class IntakeAttitude {
         this.desiredPosition = desiredPosition;
     }
 
-    public void setDesiredVelocity(int desiredVelocity) {
-        this.desiredVelocity = desiredVelocity;
+    public void setDesiredPercentOut(double desiredPercentOut) {
+        this.desiredPercentOut = desiredPercentOut;
     }
 
     public int getDesiredPosition() {
         return desiredPosition;
     }
 
-    public int getDesiredVelocity() {
-        return desiredVelocity;
+    public double getDesiredPercentOut() {
+        return desiredPercentOut;
     }
 }

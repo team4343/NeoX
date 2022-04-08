@@ -11,7 +11,7 @@ repositories {
     mavenCentral()
 }
 
-def javaVersion = JavaVersion.VERSION_13
+def javaVersion = JavaVersion.VERSION_11
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 
