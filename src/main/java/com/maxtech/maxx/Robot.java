@@ -8,6 +8,7 @@ import com.maxtech.maxx.loops.SubsystemGoalTracker;
 import com.maxtech.maxx.loops.TrajectoryRunner;
 import com.maxtech.maxx.subsystems.climber.Climber;
 import com.maxtech.maxx.subsystems.drive.Drive;
+import com.maxtech.maxx.subsystems.flywheel.Flywheel;
 import com.maxtech.maxx.subsystems.indexer.Indexer;
 import com.maxtech.maxx.subsystems.intake.Intake;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
     private final Climber climber = Climber.getInstance();
     private final Intake intake = Intake.getInstance();
     private final Indexer indexer = Indexer.getInstance();
+    private Flywheel flywheel = Flywheel.getInstance();
 
     // Loops
     private final OperatorInput oi = OperatorInput.getInstance();
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
         climber.register(enabledLooper);
         intake.register(enabledLooper);
         indexer.register(enabledLooper);
+        flywheel.register(enabledLooper);
 
         oi.register(enabledLooper);
         goalTracker.register(enabledLooper);
