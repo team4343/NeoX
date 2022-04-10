@@ -1,6 +1,4 @@
-package com.maxtech.lib.scheduling.actions;
-
-import com.maxtech.lib.scheduling.actions.Action;
+package com.maxtech.lib.scheduling.auto.actions;
 
 public class NoopAction implements Action {
     @Override

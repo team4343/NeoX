@@ -1,4 +1,4 @@
-package com.maxtech.lib.scheduling.actions;
+package com.maxtech.lib.scheduling.auto.actions;
 
 import java.util.ArrayList;
 import java.util.Arrays;

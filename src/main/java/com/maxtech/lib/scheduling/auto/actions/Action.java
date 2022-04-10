@@ -1,11 +1,11 @@
-package com.maxtech.lib.scheduling.actions;
+package com.maxtech.lib.scheduling.auto.actions;
 
 public interface Action {
     void start();
 
     void update();
 
-    boolean isFinished();
-
     void done();
+
+    boolean isFinished();
 }

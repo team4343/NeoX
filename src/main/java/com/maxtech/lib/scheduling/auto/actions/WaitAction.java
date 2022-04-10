@@ -1,4 +1,4 @@
-package com.maxtech.lib.scheduling.actions;
+package com.maxtech.lib.scheduling.auto.actions;
 
 import edu.wpi.first.wpilibj.Timer;
 

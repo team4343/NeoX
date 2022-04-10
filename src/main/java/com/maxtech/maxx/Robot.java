@@ -1,11 +1,9 @@
 package com.maxtech.maxx;
 
 import com.maxtech.lib.scheduling.Looper;
-import com.maxtech.lib.scheduling.SingleLoopSelector;
 import com.maxtech.maxx.loops.IndexerChecker;
 import com.maxtech.maxx.loops.OperatorInput;
 import com.maxtech.maxx.loops.SubsystemGoalTracker;
-import com.maxtech.maxx.loops.TrajectoryRunner;
 import com.maxtech.maxx.subsystems.climber.Climber;
 import com.maxtech.maxx.subsystems.drive.Drive;
 import com.maxtech.maxx.subsystems.flywheel.Flywheel;
@@ -32,7 +30,6 @@ public class Robot extends TimedRobot {
     // Loopers
     private final Looper enabledLooper = new Looper("Enabled");
     private final Looper disabledLooper = new Looper("Disabled");
-    private final SingleLoopSelector autonomousLooper = new SingleLoopSelector("Autonomous");
 
     private final RobotAttitude attitude = RobotAttitude.getInstance();
 
@@ -46,21 +43,17 @@ public class Robot extends TimedRobot {
         oi.register(enabledLooper);
         goalTracker.register(enabledLooper);
         indexerChecker.register(enabledLooper);
-
-        autonomousLooper.registerDefault(new TrajectoryRunner("Right side 1"));
     }
 
     @Override
     public void robotInit() {
         disabledLooper.stop();
-        autonomousLooper.stop();
         enabledLooper.start();
     }
 
     @Override
     public void disabledInit() {
         enabledLooper.stop();
-        autonomousLooper.stop();
         disabledLooper.start();
     }
 
@@ -68,15 +61,5 @@ public class Robot extends TimedRobot {
     public void disabledExit() {
         disabledLooper.stop();
         enabledLooper.start();
-    }
-
-    @Override
-    public void autonomousInit() {
-        autonomousLooper.start();
-    }
-
-    @Override
-    public void autonomousExit() {
-        autonomousLooper.stop();
     }
 }
