@@ -20,6 +20,7 @@ public class Intake extends Subsystem<IntakeState, IntakeAttitude, IntakeIO> {
     public Intake() {
         var tab = Shuffleboard.getTab("Intake");
         tab.addString("State", () -> state.toString());
+        tab.addString("Previous state", () -> previousState.toString());
         tab.addNumber("Desired position", () -> state.position);
         tab.addNumber("Desired velocity", () -> state.percentOut);
         tab.addNumber("Position", io::getPosition);

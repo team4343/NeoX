@@ -1,8 +1,8 @@
 package com.maxtech.maxx.subsystems.flywheel;
 
 import com.maxtech.lib.scheduling.Loop;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class FlywheelController extends Loop {
     private static FlywheelController instance;
@@ -15,16 +15,21 @@ public class FlywheelController extends Loop {
     private final FlywheelIO io = FlywheelIO.getInstance();
     private final FlywheelAttitude attitude = FlywheelAttitude.getInstance();
 
-    private final ProfiledPIDController controller = new ProfiledPIDController(.5, 0.001, 0, new TrapezoidProfile.Constraints(20000, 5000));
+    private final PIDController controller = new PIDController(6, 1., 0);
 
     @Override
     public void onStart() {
-        controller.reset(0);
+        controller.reset();
     }
 
     @Override
     public void onLoop() {
-        io.setVelocity(controller.calculate(io.getVelocity(), attitude.desired));
+        if (attitude.desired == null) {
+            io.setPercentOutput(0);
+            controller.calculate(io.getVelocity(), 0);
+        } else {
+            io.setVelocity(controller.calculate(io.getVelocity(), attitude.desired));
+        }
     }
 
     @Override
@@ -33,6 +38,6 @@ public class FlywheelController extends Loop {
     }
 
     public boolean atGoal() {
-        return controller.atGoal();
+        return controller.atSetpoint();
     }
 }

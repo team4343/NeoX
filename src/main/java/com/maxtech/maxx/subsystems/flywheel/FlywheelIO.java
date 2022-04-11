@@ -1,8 +1,8 @@
 package com.maxtech.maxx.subsystems.flywheel;
 
 import com.ctre.phoenix.motorcontrol.FollowerType;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.maxtech.lib.drivers.LazyTalonFX;
 import com.maxtech.lib.scheduling.IO;
 
@@ -19,11 +19,15 @@ public class FlywheelIO extends IO {
 
     private FlywheelIO() {
         slave.follow(master, FollowerType.PercentOutput);
-        slave.setInverted(InvertType.OpposeMaster);
+        slave.setInverted(TalonFXInvertType.OpposeMaster);
     }
 
     public void setVelocity(double velocity) {
         master.set(TalonFXControlMode.Velocity, velocity);
+    }
+
+    public void setPercentOutput(double percentOutput) {
+        master.set(TalonFXControlMode.PercentOutput, percentOutput);
     }
 
     public double getVelocity() {

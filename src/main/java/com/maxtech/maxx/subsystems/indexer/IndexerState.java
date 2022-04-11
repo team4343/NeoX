@@ -6,8 +6,8 @@ public enum IndexerState {
     ONE_BALL(.5, 0),
     TWO_BALL(0, 0);
 
-    public final double topPercentOutput;
     public final double bottomPercentOutput;
+    public final double topPercentOutput;
 
     IndexerState(double bottomPercentOutput, double topPercentOutput) {
         this.bottomPercentOutput = bottomPercentOutput;

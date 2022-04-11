@@ -22,7 +22,7 @@ public class Drive extends Subsystem<DriveState, DriveAttitude, DriveIO> {
     private DriveIO io             = DriveIO.getInstance();
 
     public void register(Looper looper) {
-        var loop = new Loop() {
+        looper.register(new Loop() {
             @Override
             public void onStart() {
                 attitude.start(new Pose2d(), new Rotation2d());
@@ -37,8 +37,6 @@ public class Drive extends Subsystem<DriveState, DriveAttitude, DriveIO> {
             public void onEnd() {
                 io.stop();
             }
-        };
-
-        looper.register(loop);
+        });
     }
 }

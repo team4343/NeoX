@@ -10,7 +10,7 @@ public class SetFlywheelHigh implements Action {
 
     @Override
     public void start() {
-        flywheelAttitude.desired = 1000;
+        flywheelAttitude.desired = 1000.;
     }
 
     @Override

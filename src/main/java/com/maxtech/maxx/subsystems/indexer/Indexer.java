@@ -13,8 +13,8 @@ public class Indexer extends Subsystem<IndexerState, IndexerAttitude, IndexerIO>
         return instance;
     }
 
-    public IndexerState state             = IndexerState.OFF;
-    private IndexerState previousOnState   = IndexerState.NO_BALLS;
+    public IndexerState state              = IndexerState.OFF;
+    public IndexerState previousOnState    = IndexerState.NO_BALLS;
     private final IndexerAttitude attitude = IndexerAttitude.getInstance();
     private final IndexerIO io             = IndexerIO.getInstance();
 

@@ -3,6 +3,7 @@ package com.maxtech.maxx.subsystems.flywheel;
 import com.maxtech.lib.scheduling.Loop;
 import com.maxtech.lib.scheduling.Looper;
 import com.maxtech.lib.scheduling.Subsystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class Flywheel extends Subsystem<FlywheelState, FlywheelAttitude, FlywheelIO> {
     private static Flywheel instance;
@@ -10,6 +11,12 @@ public class Flywheel extends Subsystem<FlywheelState, FlywheelAttitude, Flywhee
     public static Flywheel getInstance() {
         if (instance == null) instance = new Flywheel();
         return instance;
+    }
+
+    public Flywheel() {
+        var tab = Shuffleboard.getTab("Flywheel");
+        tab.addNumber("Current", io::getVelocity);
+        tab.addString("State", () -> state.toString());
     }
 
     private FlywheelState state                 = FlywheelState.AT_GOAL;
@@ -23,7 +30,7 @@ public class Flywheel extends Subsystem<FlywheelState, FlywheelAttitude, Flywhee
         looper.register(new Loop() {
             @Override
             public void onStart() {
-                attitude.desired = 0;
+                attitude.desired = null;
             }
 
             @Override

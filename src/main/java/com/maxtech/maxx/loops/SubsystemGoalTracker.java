@@ -26,7 +26,6 @@ public class SubsystemGoalTracker extends Loop {
     public void onLoop() {
         if (climber.atState() && !climberPreviouslyAtGoal) {
             MASTER_CONTROLLER.setRumble(XboxController.RumbleType.kRightRumble, 1);
-            DriverStation.reportWarning("" + climberPreviouslyAtGoal + " " + climber.atState(), false);
         } else if (!climber.atState()) {
             climberPreviouslyAtGoal = false;
             MASTER_CONTROLLER.setRumble(GenericHID.RumbleType.kLeftRumble, 0);

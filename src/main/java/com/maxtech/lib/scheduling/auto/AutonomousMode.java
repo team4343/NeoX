@@ -5,7 +5,7 @@ import com.maxtech.lib.scheduling.auto.actions.Action;
 
 public abstract class AutonomousMode extends Looper {
     protected AutonomousMode(String name) {
-        super(name);
+        super("Selected autonomous: " + name);
     }
 
     public void run() {};

@@ -8,5 +8,5 @@ public class FlywheelAttitude {
         return instance;
     }
 
-    public double desired = 0;
+    public Double desired = null;
 }

@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
     private final Looper enabledLooper    = new Looper("Enabled");
     private final Looper disabledLooper   = new Looper("Disabled");
     private final Looper teleopLooper     = new Looper("Teleoperated");
-    private       Looper autonomousLooper = new Looper("Unselected Autonomous");
+    private       Looper autonomousLooper = new Looper("Unselected autonomous");
 
     private final AutonomousSelector autonomousSelector = AutonomousSelector.getInstance();
 
