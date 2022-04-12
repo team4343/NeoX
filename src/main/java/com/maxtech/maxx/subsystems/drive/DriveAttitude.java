@@ -17,6 +17,8 @@ public class DriveAttitude {
         return instance;
     }
 
+    private final DriveIO io = DriveIO.getInstance();
+
     private final DifferentialDriveOdometry odometry;
     private final Field2d field;
 
@@ -33,7 +35,8 @@ public class DriveAttitude {
      * To be called periodically in order to update the observations based on encoder values.
      */
     public void updateObservations() {
-        odometry.update(new Rotation2d(), 0, 0);
+        var distances = io.getDistances();
+        odometry.update(io.getRotation(), distances.getFirst(), distances.getSecond());
         field.setRobotPose(odometry.getPoseMeters());
     }
 

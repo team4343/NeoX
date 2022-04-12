@@ -2,6 +2,7 @@ package com.maxtech.maxx.planners;
 
 import com.maxtech.lib.scheduling.Planner;
 import com.maxtech.maxx.subsystems.drive.DriveAttitude;
+import com.maxtech.maxx.subsystems.drive.DriveIO;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,6 +20,7 @@ public class RamseteMotionPlanner implements Planner {
     private RamseteMotionPlanner() {}
 
     private final DriveAttitude driveAttitude = DriveAttitude.getInstance();
+    private final DriveIO       driveIO       = DriveIO.getInstance();
 
     private Trajectory trajectory;
     private double startTime;
@@ -39,6 +41,7 @@ public class RamseteMotionPlanner implements Planner {
         var goal = trajectory.sample(Timer.getFPGATimestamp() - startTime);
         var chassisSpeeds = controller.calculate(driveAttitude.getPose(), goal);
         var wheelSpeeds = KINEMATICS.toWheelSpeeds(chassisSpeeds);
+        driveIO.setWheelSpeeds(wheelSpeeds);
     }
 
     @Override
