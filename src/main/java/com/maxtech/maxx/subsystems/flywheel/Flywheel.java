@@ -16,6 +16,10 @@ public class Flywheel extends Subsystem<FlywheelState, FlywheelAttitude, Flywhee
     public Flywheel() {
         var tab = Shuffleboard.getTab("Flywheel");
         tab.addNumber("Current", io::getVelocity);
+        tab.addNumber("Desired", () -> {
+            if (attitude.desired == null) return 0;
+            return attitude.desired;
+        });
         tab.addString("State", () -> state.toString());
     }
 

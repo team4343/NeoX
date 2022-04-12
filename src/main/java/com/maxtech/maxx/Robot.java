@@ -1,6 +1,7 @@
 package com.maxtech.maxx;
 
 import com.maxtech.lib.scheduling.Looper;
+import com.maxtech.lib.scheduling.auto.AutonomousMode;
 import com.maxtech.lib.scheduling.auto.AutonomousSelector;
 import com.maxtech.maxx.auto.modes.RightFender;
 import com.maxtech.maxx.loops.IndexerChecker;
@@ -33,9 +34,9 @@ public class Robot extends TimedRobot {
     private final Looper enabledLooper    = new Looper("Enabled");
     private final Looper disabledLooper   = new Looper("Disabled");
     private final Looper teleopLooper     = new Looper("Teleoperated");
-    private       Looper autonomousLooper = new Looper("Unselected autonomous");
 
     private final AutonomousSelector autonomousSelector = AutonomousSelector.getInstance();
+    private       AutonomousMode autonomousLooper;
 
     private final RobotAttitude attitude = RobotAttitude.getInstance();
 
@@ -52,6 +53,7 @@ public class Robot extends TimedRobot {
         oi.register(teleopLooper);
 
         autonomousSelector.registerDefault(new RightFender());
+        autonomousLooper = autonomousSelector.getSelection();
     }
 
     @Override

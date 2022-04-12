@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This action runs numerous actions in parallel. After constructing this action, run it like a normal one.
+ *
+ * ```java
+ * ParallelAction mAction = new ParallelAction(new NoopAction(), new NoopAction, new NoopAction());
+ * runAction(mAction);
+ * ```
+ */
 public class ParallelAction implements Action {
     private final ArrayList<Action> actions;
 

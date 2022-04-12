@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Notifier;
 
 import java.util.ArrayList;
 
-public class Looper {
+public class Looper implements ILooper {
     private final ArrayList<Loop> loops = new ArrayList<>();
     protected final Notifier notifier = new Notifier(() -> loops.forEach(Loop::onLoop));
 

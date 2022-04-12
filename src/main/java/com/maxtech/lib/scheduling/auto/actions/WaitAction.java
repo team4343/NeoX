@@ -2,6 +2,9 @@ package com.maxtech.lib.scheduling.auto.actions;
 
 import edu.wpi.first.wpilibj.Timer;
 
+/**
+ * This action waits for a given amount of time before continuing.
+ */
 public class WaitAction implements Action {
     private final double timeToWait;
     private double startTime;

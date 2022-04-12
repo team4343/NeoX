@@ -8,6 +8,7 @@ import com.maxtech.maxx.subsystems.indexer.Indexer;
 import com.maxtech.maxx.subsystems.indexer.IndexerState;
 import com.maxtech.maxx.subsystems.intake.Intake;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.maxtech.maxx.Constants.Flywheel;
 
 import static com.maxtech.maxx.Constants.Ports.Drive.MASTER_CONTROLLER;
 
@@ -29,8 +30,7 @@ public class OperatorInput extends Loop {
     private final FlywheelAttitude flywheelAttitude = FlywheelAttitude.getInstance();
 
     @Override
-    public void onStart() {
-    }
+    public void onStart() {}
 
     @Override
     public void onLoop() {
@@ -52,7 +52,7 @@ public class OperatorInput extends Loop {
         }
 
         if (MASTER_CONTROLLER.getAButtonPressed()) {
-            flywheelAttitude.desired = 10000.;
+            flywheelAttitude.desired = Flywheel.TOP_GOAL_RPM;
             indexer.previousOnState = IndexerState.NO_BALLS;
 
             if (indexer.state != IndexerState.OFF) indexer.state = indexer.previousOnState;
@@ -62,7 +62,5 @@ public class OperatorInput extends Loop {
     }
 
     @Override
-    public void onEnd() {
-
-    }
+    public void onEnd() {}
 }
